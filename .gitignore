@@ -1,0 +1,14 @@
+.DS_Store
+*.csv
+*.dat
+*.zip
+*.pyc
+*.egg-info
+apps
+venv
+build
+dist
+data
+tests
+geocoding/database
+__pycache__/
