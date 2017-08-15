@@ -38,8 +38,8 @@ postal_dtype = np.dtype([
 ])
 
 commune_dtype = np.dtype([
-    ('nom', 'U32'),
     ('normalise', 'U32'),
+    ('nom', 'U32'),
     ('code_insee', 'U5'),
     ('longitude', 'int32'),
     ('latitude', 'int32'),
@@ -49,8 +49,8 @@ commune_dtype = np.dtype([
 ])
 
 voie_dtype = np.dtype([
-    ('nom', 'U65'),
     ('normalise', 'U47'),
+    ('nom', 'U65'),
     ('longitude', 'int32'),
     ('latitude', 'int32'),
     ('start', 'int32'),

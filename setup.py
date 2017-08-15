@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='Geocoding',
-    version='0.0.1',
+    version='1.0.0',
 
     description='geocoding is an address search engine for France',
     long_description=long_description,
@@ -47,19 +47,17 @@ setup(
 
     keywords='Geocoder France',
 
-    packages=['Geocoding'],
-
-    py_modules=["Geocoding/search", "Geocoding/access", "Geocoding/utils"],
+    packages=['geocoding'],
 
     install_requires=['numpy', 'Unidecode', 'KdQuery'],
 
     package_data={
-        'Geocoding': ['database_dat/departement.dat',
-                      'database_dat/commune.dat',
-                      'database_dat/postal.dat',
-                      'database_dat/postal_index.dat',
-                      'database_dat/voie.dat',
-                      'database_dat/localisation.dat',
-                      'database_dat/kdtree.dat'],
+        'Geocoding': ['database/departement.dat',
+                      'database/commune.dat',
+                      'database/postal.dat',
+                      'database/postal_index.dat',
+                      'database/voie.dat',
+                      'database/localisation.dat',
+                      'database/kdtree.dat'],
     },
 )
