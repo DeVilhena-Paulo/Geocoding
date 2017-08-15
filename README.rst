@@ -2,7 +2,7 @@
 Geocoding
 =========
 
-Geocoding is an address search engine for France. Unlike Google Maps API, it uses a database provided by the french government (Base Adresse Nationale - BAN) as the main source of information. The main purpose of the project is to supply the needs of french data scientists that rely on geocoded data. In this sense, Geocoding is a fast and simple tool able to take a well structured address as input and return the geographical coordinates many times as wanted. Notice the restriction: well structured address. Geocoding is not able to handle totally free format input. Notice the absence of restriction: many times as wanted. Data scientists work with millions of data and while most APIs limit the number of queries to the thousands, Geocoding is free.
+Geocoding is an address search engine for France. Unlike other APIs, it uses a database provided by the french government (Base Adresse Nationale - BAN) as the main source of information and does not impose any limit to the number of queries. The main purpose of the project is to supply the needs of french data scientists that rely on geocoded data.
 
 Getting Started
 ===============
