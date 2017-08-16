@@ -52,11 +52,13 @@ setup(
     install_requires=['numpy', 'Unidecode', 'KdQuery'],
 
     package_data={
-        'Geocoding': ['database/departement.dat',
+        'geocoding': ['database/departement.dat',
                       'database/commune.dat',
+                      'database/commune_index.dat',
                       'database/postal.dat',
                       'database/postal_index.dat',
                       'database/voie.dat',
+                      'database/voie_index.dat',
                       'database/localisation.dat',
                       'database/kdtree.dat'],
     },

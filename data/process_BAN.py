@@ -109,7 +109,7 @@ class FileProcessor:
         self.write_departement()
 
         for key, value in skip_count.items():
-            print("number of skkiped %s: %d" % (key, value))
+            print("number of skipped %s: %d" % (key, value))
 
     def get_voie(self):
         nom_voie = norm.uniform_adresse(self.lineProc.fields['nom_voie'])

@@ -21,7 +21,7 @@ from .similarity import Similarity
 from .datatypes import dtypes
 from .datapaths import paths
 
-# data = limits = {}
+data = limits = {}
 data = {table: np.memmap(paths[table], dtypes[table]) for table in paths
         if os.path.isfile(paths[table])}
 limits = {table: (0, len(data[table])) for table in data}
@@ -89,7 +89,7 @@ def heuristic(table, column, narrow, wide, element):
     found = (score is not None and score >= narrow[2])
 
     # Wide search
-    if not found:
+    if not found and wide is not None:
         indices = range(wide[0], wide[1])
         score, rang, element_id = \
             utils.most_similar(indices, data[table][column], similarity)
@@ -239,7 +239,7 @@ def select_voie(commune_id, voie, voie_type):
 
     # Heuristcs
     if not found:
-        start_type, end_type = voie_id, voie_id + 1
+        start_type, end_type = voie_id - 1, voie_id
         if voie_type is not None:
             while data['voie']['normalise'][start_type].startswith(voie_type):
                 start_type -= 1
