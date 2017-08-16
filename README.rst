@@ -16,17 +16,13 @@ Prerequisites
 For using purposes
 ------------------
 
-You can download the package in the wheel format from this link:
+Download the package in the wheel format from here: `Geocoding-1.0.0-py3-none-any.whl <https://drive.google.com/open?id=0B3GIkecVT8Q7YXNNbEkwX3l4cUE>`_
 
-`Geocoding.whl <https://drive.google.com/open?id=0B3GIkecVT8Q7YXNNbEkwX3l4cUE>`_.
-
-and once the donwload is complete you execute the following command::
+and once the donwload is complete execute the following command::
 
  pip install <path to whl file>/Geocoding-1.0.0-py3-none-any.whl
 
-Or you can download the package in the source distribution format from this link:
-
-`Geocoding.tar.gz <https://drive.google.com/open?id=0B3GIkecVT8Q7ejB5LVFJLWVmMUE>`_.
+Or download the package in the source distribution format from here: `Geocoding-1.0.0.tar.gz <https://drive.google.com/open?id=0B3GIkecVT8Q7ejB5LVFJLWVmMUE>`_
 
 and once the donwload is complete you execute the following command::
 
@@ -50,12 +46,9 @@ Execute the following modules::
  python data/index.py
  python data/activate_reverse.py
 
-Once it is done, you can build the package directly::
+Once it is done, you can get the source distribution or the wheel of the package directly::
 
  python setup.py sdist
-
-Or::
-
  python setup.py bdist_wheel
 
 Usage
