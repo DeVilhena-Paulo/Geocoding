@@ -2,7 +2,7 @@
 Geocoding
 =========
 
-Geocoding is an address search engine for France. Unlike other APIs, it uses a database provided by the french government (Base Adresse Nationale - BAN) as the main source of information and does not impose any limit to the number of queries. The main purpose of the project is to supply the needs of french data scientists that rely on geocoded data.
+Geocoding is an address search engine for France. Unlike other APIs, it uses a database provided by the french government (Base Adresse Nationale - BAN) as the main source of information and does not impose any limit to the number of queries. The purpose of the project is to supply the needs of french data scientists that rely on geocoded data.
 
 Getting Started
 ===============
@@ -16,17 +16,25 @@ Prerequisites
 For using purposes
 ------------------
 
-Download the package in the wheel format from here: `Geocoding-1.0.0-py3-none-any.whl <https://drive.google.com/open?id=0B3GIkecVT8Q7YXNNbEkwX3l4cUE>`_
+Download the built-package: |location_link1|
 
-and once the donwload is complete execute the following command::
+.. |location_link1| raw:: html
+
+   <a href="https://drive.google.com/open?id=0B3GIkecVT8Q7YXNNbEkwX3l4cUE" target="_blank">Geocoding-1.0.0-py3-none-any.whl</a>
+
+Once the donwload is complete, execute the following command::
 
  pip install <path to whl file>/Geocoding-1.0.0-py3-none-any.whl
 
-Or download the package in the source distribution format from here: `Geocoding-1.0.0.tar.gz <https://drive.google.com/open?id=0B3GIkecVT8Q7ejB5LVFJLWVmMUE>`_
+Another option is to download the source distribution: |location_link2|
 
-and once the donwload is complete you execute the following command::
+.. |location_link2| raw:: html
 
- pip install <path to whl file>/Geocoding-1.0.0.tar.gz
+   <a href="https://drive.google.com/open?id=0B3GIkecVT8Q7ejB5LVFJLWVmMUE" target="_blank">Geocoding-1.0.0.tar.gz</a>
+
+and once the donwload is complete, execute the following command::
+
+ pip install <path to gztar file>/Geocoding-1.0.0.tar.gz
 
 For development or testing purposes
 -----------------------------------
@@ -117,3 +125,30 @@ The reverse functionality
     output = geocoding.near(query)
     output['commune']['nom']  # PALAISEAU
     output['voie']['nom']  # BOULEVARD DES MARECHAUX
+    
+Benchmarks
+---------------
+
+.. code-block:: python
+
+    import geocoding
+
+    begin = time.time()
+    for _ in range(2000):
+        geocoding.find('91130', 'PALISEAU', '12 BD DES MARECHUX')
+    print(time.time() - begin, 'seconds')  # 1.063 seconds
+
+    begin = time.time()
+    for _ in range(10000):
+        geocoding.find('91120', 'PALAISEAU', '12 BD DES MARECHAUX')
+    print(time.time() - begin, 'seconds')  # 1.407 seconds
+
+    begin = time.time()
+    for _ in range(10000):
+        geocoding.find('75015', 'PARIS', '1 RUE SAINT CHARLES')
+    print(time.time() - begin, 'seconds')  # 1.525 seconds
+
+    begin = time.time()
+    for _ in range(1000):
+        geocoding.near((2, 48))
+    print(time.time() - begin, 'seconds')  # 0.922 seconds
