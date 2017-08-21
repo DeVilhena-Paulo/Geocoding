@@ -137,12 +137,13 @@ def select_code_postal(code_postal):
     start, end = limits['postal_index']
     found = (i < end and data['postal']['code'][postal_id] == code_postal)
 
-    if not found and i >= start:
-        dist_1 = code_postal - data['postal']['code'][i - 1]
-        dist_2 = data['postal']['code'][i] - code_postal
-        postal_id = data['postal_index'][i] if dist_2 < dist_1 \
-            else data['postal_index'][i - 1]
-        found = (min(dist_1, dist_2) <= 5)
+    if not found:
+        # Compute the difference to the nearest values from code_postal
+        diff = [(abs(data['postal']['code'][j] - code_postal), j)
+                for j in range(max(i - 1, start), min(i + 1, end))]
+        min_value = min(diff)
+        postal_id = min_value[1]
+        found = (min_value[0] <= 5)
 
     return postal_id if found else None
 
