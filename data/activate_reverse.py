@@ -2,7 +2,7 @@ import os
 import sys
 import numpy as np
 
-from create_database_dat import create_dat_file
+from index import create_dat_file
 
 from kdquery import Tree
 
@@ -18,7 +18,7 @@ def node_to_tuple(node):
 
     limit_left = node.region[0][0]
     limit_right = node.region[0][1]
-    limit_bottom = node.region[1][1]
+    limit_bottom = node.region[1][0]
     limit_top = node.region[1][1]
 
     left = node.left if node.left is not None else -1
