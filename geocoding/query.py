@@ -21,10 +21,18 @@ from .similarity import Similarity
 from .datatypes import dtypes
 from .datapaths import paths
 
-data = limits = {}
-data = {table: np.memmap(paths[table], dtypes[table]) for table in paths
-        if os.path.isfile(paths[table])}
-limits = {table: (0, len(data[table])) for table in data}
+data = {}
+limits = {}
+
+
+def setup():
+    """Initialize the module level variables.
+    """
+    if not data or not limits:
+        for table in paths:
+            if os.path.isfile(paths[table]):
+                data[table] = np.memmap(paths[table], dtypes[table])
+                limits[table] = (0, len(data[table]))
 
 
 def select(table, column, start, end, element):

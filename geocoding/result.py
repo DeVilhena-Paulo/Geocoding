@@ -16,7 +16,7 @@ output_specs = {
     'departement': ['code'],
     'postal': ['code'],
     'commune': ['nom', 'code_insee'],
-    'voie': ['nom', 'normalise'],
+    'voie': ['nom'],
     'localisation': ['numero']
 }
 
