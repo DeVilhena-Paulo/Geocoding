@@ -10,12 +10,12 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='Geocoding',
-    version='1.0.1',
+    version='1.2.1',
 
     description='geocoding is an address search engine for France',
     long_description=long_description,
 
-    url='https://github.com/DeVilhena-Paulo/Geocoding_Package',
+    url='https://github.com/DeVilhena-Paulo/Geocoding',
 
     author='Paulo Emilio de Vilhena',
     author_email='pevilhena2@gmail.com',
@@ -43,6 +43,7 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
     ],
 
     keywords='Geocoder France',
@@ -51,15 +52,9 @@ setup(
 
     install_requires=['numpy', 'Unidecode', 'KdQuery'],
 
-    package_data={
-        'geocoding': ['database/departement.dat',
-                      'database/commune.dat',
-                      'database/commune_index.dat',
-                      'database/postal.dat',
-                      'database/postal_index.dat',
-                      'database/voie.dat',
-                      'database/voie_index.dat',
-                      'database/localisation.dat',
-                      'database/kdtree.dat'],
+    entry_points={
+        'console_scripts': [
+            'geocoding = geocoding.__main__:main'
+        ]
     },
 )
