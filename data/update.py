@@ -22,7 +22,7 @@ def get_ban_file():
     if os.path.exists(ban_zip):
         os.remove(ban_zip)
 
-    # Downloads the content and stores it at FILE_PATH.
+    # Downloads the content and stores it at ban_zip.
     with open(ban_zip, 'wb') as handle:
         response = requests.get(url, stream=True)
 
@@ -42,7 +42,7 @@ def unzip():
     if not os.path.exists(raw_data):
         os.mkdir(raw_data)
 
-    # Uncompress each file within FILE
+    # Uncompress each file within ban_zip
     with zipfile.ZipFile(ban_zip) as zf:
         for member in zf.infolist():
             zf.extract(member, path=raw_data)
