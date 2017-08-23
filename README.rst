@@ -16,25 +16,13 @@ Prerequisites
 For using purposes
 ------------------
 
-Download the built-package: |location_link1|
+The package can easily be installed via pip::
 
-.. |location_link1| raw:: html
+  pip install geocoding
 
-   <a href="https://drive.google.com/open?id=0B3GIkecVT8Q7YXNNbEkwX3l4cUE" target="_blank">Geocoding-1.0.0-py3-none-any.whl</a>
+Before the first use, execute the following command::
 
-Once the donwload is complete, execute the following command::
-
- pip install <path to whl file>/Geocoding-1.0.0-py3-none-any.whl
-
-Another option is to download the source distribution: |location_link2|
-
-.. |location_link2| raw:: html
-
-   <a href="https://drive.google.com/open?id=0B3GIkecVT8Q7ejB5LVFJLWVmMUE" target="_blank">Geocoding-1.0.0.tar.gz</a>
-
-and once the donwload is complete, execute the following command::
-
- pip install <path to gztar file>/Geocoding-1.0.0.tar.gz
+  geocoding update
 
 For development or testing purposes
 -----------------------------------
@@ -125,7 +113,7 @@ The reverse functionality
     output = geocoding.near(query)
     output['commune']['nom']  # PALAISEAU
     output['voie']['nom']  # BOULEVARD DES MARECHAUX
-    
+
 Benchmarks
 ---------------
 
