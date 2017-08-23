@@ -18,11 +18,11 @@ For using purposes
 
 The package can easily be installed via pip::
 
-  $ pip install geocoding
+  pip install geocoding
 
 Before the first use, execute the following command::
 
-  $ geocoding
+  geocoding update
 
 For development or testing purposes
 -----------------------------------
