@@ -28,20 +28,24 @@ def preprocess(code_postal, commune, adresse):
          voie (str): The street name)
 
     """
-    # Try to convert postal code to int
-    if code_postal is not None:
+    # Try to convert postal code to int.
+    if isinstance(code_postal, str):
         try:
             code_postal = int(code_postal)
         except ValueError:
             code_postal = None
+    else:
+        code_postal = None
 
-    # Normalize city
-    if commune is not None:
+    # Normalize city.
+    if isinstance(commune, str):
         commune = normalize.uniform_commune(commune)
+    else:
+        commune = None
 
-    # Retrieve the number and street from address and normalize street name
+    # Retrieve the number and street from address and normalize street name.
     numero, voie, voie_type = None, None, None
-    if adresse is not None:
+    if isinstance(adresse, str):
         numero, voie, voie_type = normalize.mine(adresse)
 
     return code_postal, commune, numero, voie, voie_type
@@ -86,27 +90,27 @@ def position(code_postal=None, commune=None, adresse=None):
     """
     query.setup()
 
-    # Input preprocessement
+    # Input preprocessement.
     code_postal, commune, numero, voie, voie_type = \
         preprocess(code_postal, commune, adresse)
 
-    # Try to find postal code
+    # Try to find postal code.
     postal_id = query.select_code_postal(code_postal)
 
-    # Try to find city
+    # Try to find city.
     commune_id = query.select_commune(postal_id, commune)
     if commune_id is None:
         commune_id = query.complete_commune_selection(commune)
 
-    # Try to find street
+    # Try to find street.
     voie_id = query.select_voie(commune_id, voie, voie_type)
     if voie_id is None:
         voie_id = query.complete_voie_selection(code_postal, commune, voie)
 
-    # Try to find number
+    # Try to find number.
     localisation_id = query.select_localisation(voie_id, numero)
 
-    # Prepare the output
+    # Prepare the output.
     if localisation_id is not None:
         # Quality = 1 -> The search was successful.
         status, quality = ('localisation', localisation_id), 1
@@ -175,6 +179,6 @@ def reverse(position):
         return result.get_output(None, 6)
     node_id, dist = query.nearest_point_from(position)
 
-    # Get the reference id for the address
+    # Get the reference id for the address.
     localisation_id = query.data['kdtree']['ref_id'][node_id]
     return result.get_output(('localisation', localisation_id), 1)

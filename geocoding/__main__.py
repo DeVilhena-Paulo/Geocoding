@@ -7,10 +7,10 @@ import requests
 
 from .datapaths import database
 
-url = "https://dl.dropboxusercontent.com/s/wm7mvsevbj2viba/database.zip?dl=0"
+url = "https://dl.dropboxusercontent.com/s/vp3x2j8xlt63gkm/database.zip?dl=0"
 
 here = os.path.abspath(os.path.dirname(__file__))
-file = os.path.join(here, 'db.zip')
+file = os.path.join(here, 'data.zip')
 
 
 def completion_bar(msg, fraction):
@@ -38,7 +38,7 @@ def get_uploaded_data():
 
             # Print completion bar
             done_length += len(block)
-            completion_bar('Retrieving data', done_length / total_length)
+            completion_bar('Retrieving database', done_length / total_length)
 
         print('')
 
@@ -54,12 +54,15 @@ def unzip():
     with zipfile.ZipFile(file) as zf:
         zipped_files = len(zf.infolist())
         unzipped_files = 0
+
         for member in zf.infolist():
             zf.extract(member, path=database)
-            unzipped_files += 1
-            completion_bar('Unzipping files', unzipped_files / zipped_files)
 
-    os.remove(file)
+            # Print completion bar
+            unzipped_files += 1
+            completion_bar('Uncompressing files',
+                           unzipped_files / zipped_files)
+
     print('\nGeocoding is ready to use!')
 
 
@@ -67,18 +70,15 @@ def main(args=None):
     args = sys.argv[1:]
     commands = {
         'download': get_uploaded_data,
-        'unzip': unzip
+        'unzip': unzip,
+        'update': (lambda: (get_uploaded_data(), unzip()))
     }
 
-    if not args:
-        commands['download']()
-        commands['unzip']()
+    if not args or args[0] not in commands:
+        print("usage: geocoding {download, unzip, update}")
 
-    elif args[0] in commands:
+    elif args and args[0] in commands:
         commands[args[0]]()
-
-    else:
-        print("usage: geocoding {download, unzip}")
 
 
 if __name__ == "__main__":

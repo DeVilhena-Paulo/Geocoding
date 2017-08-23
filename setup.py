@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='Geocoding',
-    version='1.2.1',
+    version='1.2.2',
 
     description='geocoding is an address search engine for France',
     long_description=long_description,
