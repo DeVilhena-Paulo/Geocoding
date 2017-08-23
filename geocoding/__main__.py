@@ -76,9 +76,9 @@ def main(args=None):
 
     if not args or args[0] not in commands:
         print("usage: geocoding {download, unzip, update}")
+        return
 
-    elif args and args[0] in commands:
-        commands[args[0]]()
+    commands[args[0]]()
 
 
 if __name__ == "__main__":
