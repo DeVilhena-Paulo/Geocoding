@@ -8,9 +8,7 @@ apps
 venv
 build
 dist
-data/raw
-data/processed
-data/checkout.py
+data/
 tests
 geocoding/database
 __pycache__/
