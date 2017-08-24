@@ -8,13 +8,17 @@ import sys
 import zipfile
 import requests
 
-from .references import raw_data, ban_zip, url
+from .datapaths import here
+
+url = 'https://adresse.data.gouv.fr/data/BAN_licence_gratuite_repartage.zip'
+raw_data = os.path.join(here, 'raw')
+ban_zip = os.path.join(raw_data, 'ban.zip')
 
 
 def completion_bar(msg, fraction):
     percent = int(100 * fraction)
     size = int(50 * fraction)
-    sys.stdout.write("\r%s : %3d%%[%s%s]" %
+    sys.stdout.write("\r%-15s : %3d%%[%s%s]" %
                      (msg, percent, '=' * size, ' ' * (50 - size)))
     sys.stdout.flush()
 

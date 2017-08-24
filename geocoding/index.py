@@ -11,10 +11,9 @@ import os
 import numpy as np
 from collections import deque
 
-from .references import raw_data
 from .datatypes import dtypes
 from .datapaths import paths, database
-from .download import completion_bar
+from .download import completion_bar, raw_data
 from . import ban_processing
 
 file_names = ['departement', 'postal', 'commune', 'voie', 'localisation']
@@ -40,7 +39,7 @@ def process_files():
     for i, departement in enumerate(departements):
         ban_processing.update(departement, ban_files[departement],
                               processed_files)
-        completion_bar('Processing files', (i + 1) / len(departements))
+        completion_bar('Processing BAN', (i + 1) / len(departements))
 
     print('')
 
