@@ -15,5 +15,4 @@ database = os.path.join(here, 'database')
 
 tables = ['departement', 'postal', 'commune', 'voie', 'localisation',
           'commune_index', 'postal_index', 'voie_index', 'kdtree']
-
 paths = {table: os.path.join(database, table + '.dat') for table in tables}
