@@ -20,32 +20,19 @@ The package can easily be installed via pip::
 
   pip install geocoding
 
-Before the first use, execute the following command::
+Before the first use, you need to download the BAN database and process its files to unlock the functionalities of the package. All of this can be done with the following command (the whole process should take 30 minutes)::
 
   geocoding update
 
-For development or testing purposes
------------------------------------
+Alternatively, you can do it step by step with the following commands::
 
-Clone the project with git::
+  geocoding download
+  geocoding decompress
+  geocoding index
 
- git clone https://github.com/DeVilhena-Paulo/Geocoding.git
+To unlock the reverse search, execute the following command::
 
-Change to the project's directory::
-
- cd Geocoding
-
-Execute the following modules::
-
- python data/update.py
- python data/intermediate.py
- python data/index.py
- python data/activate_reverse.py
-
-Once it is done, you can get the source distribution or the wheel of the package directly::
-
- python setup.py sdist
- python setup.py bdist_wheel
+  geocoding reverse
 
 Usage
 =====
