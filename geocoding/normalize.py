@@ -2,14 +2,14 @@
 """Normalization methods the database and the input of the search.
 
 Attributes:
-    dicitionary (dict of str): Dictionary of commom abbreviations in french
+    dicitionary (dict of str): Dictionary of common abbreviations in French
         search queries.
-    voie_type_1 (set of str): Set of commom types of street with one word in
+    voie_type_1 (set of str): Set of common types of street with one word in
         France.
-    voie_type_2 (set of str): Set of commom types of street with two word in
+    voie_type_2 (set of str): Set of common types of street with two word in
         France.
-    meanless_words (set of str): Set of words infrench that does not contain
-        information to destinguish one address from another.
+    meanless_words (set of str): Set of words in French that does not contain
+        information to distinguish one address from another.
 
 """
 import re
@@ -70,7 +70,7 @@ def remove_separators(text):
     """Remove some separator symbols that doesn't make sense in an address.
 
     Remove the parenthesis and everything inside if there is, otherwise search
-    for a slah or a vertical slash and return the everything at the its left.
+    for a slash or a vertical slash and return the everything at the its left.
     """
     # Remove parenthesis
     text = re.sub(r'[(].*[)]', '', text)
@@ -111,13 +111,13 @@ def translate(text):
 
 
 def uniform_adresse(text):
-    """The uniformization of the address.
+    """Normalization of the address.
     """
     return ''.join(uniform_words(text))
 
 
 def uniform_commune(text):
-    """The uniformization of the city name.
+    """Normalization of the city name.
     """
     return re.sub(r'[0-9]', '', ''.join(uniform_words(text))).strip()
 
@@ -169,7 +169,7 @@ def mine(text):
             numero, numero_index = int(matches[0]), i
             break
 
-    # In the case that the word describing the type of the street was'nt found
+    # In the case that the word describing the type of the street wasn't found
     if voie_type_index is None and numero_index is not None:
         voie_type_index = numero_index + 1
     elif voie_type_index is None:

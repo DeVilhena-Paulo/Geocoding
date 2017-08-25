@@ -12,8 +12,7 @@ from .download import completion_bar
 
 
 def node_to_tuple(node):
-    longitude = node.point[0]
-    latitude = node.point[1]
+    longitude, latitude = node.point
 
     limit_left = node.region[0][0]
     limit_right = node.region[0][1]
@@ -45,6 +44,8 @@ def create_kdtree():
         count += 1
         completion_bar('Loading kd-tree', (count / n_total))
 
+    print('\nStoring ...')
     tuple_list = [node_to_tuple(node) for node in tree]
     create_dat_file(tuple_list, paths['kdtree'], dtypes['kdtree'])
+    print('Activation successfully')
     return True

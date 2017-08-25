@@ -57,7 +57,7 @@ class Similarity():
     def score(self, t):
         """String similarity score.
 
-        The score of similarity between two strings s and t is definied as the
+        The score of similarity between two strings s and t is defined as the
         score of the intersection over the score of the union of two sets: the
         set of unigrams and bigrams of s and t.
 
@@ -66,7 +66,7 @@ class Similarity():
 
         Returns:
             (float): The score of similarity between t and the string s passed
-                as argument in the iitialization of the class.
+                as argument in the initialization of the class.
 
         """
         # Union of the unigram and bigram of t

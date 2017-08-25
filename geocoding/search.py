@@ -9,11 +9,11 @@ from . import query
 from . import result
 
 
-def preprocess(code_postal, commune, adresse):
-    """First processement of the input from the position method.
+def preprocessing(code_postal, commune, adresse):
+    """First processing of the input from the position method.
 
     Convert postal code to int, normalize the city name and separate number
-    and street from adsress.
+    and street from adresse.
 
     Args:
         code_postal (str): The postal code.
@@ -90,9 +90,9 @@ def position(code_postal=None, commune=None, adresse=None):
     """
     query.setup()
 
-    # Input preprocessement.
+    # Input preprocessing.
     code_postal, commune, numero, voie, voie_type = \
-        preprocess(code_postal, commune, adresse)
+        preprocessing(code_postal, commune, adresse)
 
     # Try to find postal code.
     postal_id = query.select_code_postal(code_postal)

@@ -57,7 +57,7 @@ def select(table, column, start, end, element):
     return pos, found
 
 
-def heuristic(table, column, narrow, wide, element):
+def heuristics(table, column, narrow, wide, element):
     """Search record on table with field column the most similar to element.
 
     Args:
@@ -72,13 +72,13 @@ def heuristic(table, column, narrow, wide, element):
             third element (float): The threshold for the similarity score in
                 the narrow search.
         wide (:obj:`tuple`): Tuple of length 3 with setting for the wide
-            search (when the narrow is not successeful).
+            search (when the narrow is not successful).
             first element (int): The bottom limit index to look in the table in
                 the wide search.
             second element (int): The top limit index to look in the table in
                 the wide search.
             third element (float): The threshold for the similarity score in
-                the widesearch.
+                the wide search.
         element (str): The element to search for.
 
     Returns:
@@ -157,7 +157,7 @@ def select_code_postal(code_postal):
 
 
 def select_commune(postal_id, commune):
-    """Select record on commune table with field normalise equals to commune or
+    """Select record on commune table with field normalize equals to commune or
     sufficiently similar.
 
     Args:
@@ -181,14 +181,14 @@ def select_commune(postal_id, commune):
     if not found:
         narrow = (max(start, commune_id - 2), min(end, commune_id + 2), 0.7)
         wide = (start, end, 0.5)
-        commune_id, found = heuristic('commune', 'normalise', narrow, wide,
-                                      commune)
+        commune_id, found = heuristics('commune', 'normalise', narrow, wide,
+                                       commune)
 
     return commune_id if found else None
 
 
 def complete_commune_selection(commune):
-    """Select record on commune table with field normalise the most similar to
+    """Select record on commune table with field normalize the most similar to
     commune.
 
     Search for commune in the entire commune table. This method is the
@@ -226,7 +226,7 @@ def complete_commune_selection(commune):
 
 
 def select_voie(commune_id, voie, voie_type):
-    """Select record on voie table with field normalise equals to voie or
+    """Select record on voie table with field normalize equals to voie or
     sufficiently similar.
 
     Args:
@@ -246,7 +246,7 @@ def select_voie(commune_id, voie, voie_type):
     start, end = ref_element['start'], ref_element['end']
     voie_id, found = select('voie', 'normalise', start, end, voie)
 
-    # Heuristcs
+    # Heuristics
     if not found:
         start_type, end_type = voie_id - 1, voie_id
         if voie_type is not None:
@@ -265,7 +265,7 @@ def select_voie(commune_id, voie, voie_type):
         narrow = (narrow_start, narrow_end, 0.6)
         wide = (start, end, 0.4)
 
-        voie_id, found = heuristic('voie', 'normalise', narrow, wide, voie)
+        voie_id, found = heuristics('voie', 'normalise', narrow, wide, voie)
 
     return voie_id if found else None
 
@@ -295,20 +295,20 @@ def complete_voie_selection(code_postal, commune, voie):
                               data['voie']['normalise'],
                               sorted=False)
 
-    # If the search was successeful and there is no code_postal or commune
+    # If the search was successful and there is no code_postal or commune
     # to continue, we finish.
     if code_postal is None and commune is None:
         return voie_id if data['voie']['normalise'][voie_id] == voie else None
 
     # Indices of voie table to consider in the heuristics step
     if data['voie']['normalise'][voie_id] == voie:
-        # If the search was successeful, find the greatest interval of equality
+        # If the search was successful, find the greatest interval of equality
         j = i
         while data['voie']['normalise'][data['voie_index'][j]] == voie:
             j += 1
         voie_indices = data['voie_index'][i: j]
     else:
-        # If the search wasn't successeful, pick some near indices from the
+        # If the search wasn't successful, pick some near indices from the
         # search result
         start, end = limits['voie_index']
         voie_indices = data['voie_index'][max(start, i - 2): min(end, i + 2)]
@@ -361,7 +361,7 @@ def select_localisation(voie_id, numero):
 
 
 def get_properties(node_id):
-    """Auxiliar method to the nearest_point method from kdquery package.
+    """Auxiliary method to the nearest_point method from kdquery package.
 
     Args:
         node_id (int): Index of a node in the internal representation of the
@@ -376,7 +376,7 @@ def get_properties(node_id):
          active (bool): True if the node will be consider in the computation of
              the nearest point,
          left (int): Index to left child,
-         right (int): Index toright child)
+         right (int): Index to right child)
 
     """
     table_node = data['kdtree'][node_id]
@@ -386,7 +386,7 @@ def get_properties(node_id):
     limit_bottom = utils.int_to_degree(table_node['limit_bottom'])
     limit_top = utils.int_to_degree(table_node['limit_top'])
 
-    # The region of the space definied by the node
+    # The region of the space defined by the node
     region = [[limit_left, limit_right], [limit_bottom, limit_top]]
 
     # The position of the point in the space

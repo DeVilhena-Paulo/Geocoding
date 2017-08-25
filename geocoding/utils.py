@@ -4,7 +4,7 @@
 This module defines some useful methods for the application.
 
 Attributes:
-    SCALE (int): The scale of convertion of float to int.
+    SCALE (int): The scale conversion of float to int.
 
 """
 SCALE = 7

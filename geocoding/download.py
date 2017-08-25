@@ -49,7 +49,7 @@ def get_ban_file():
         print('')
 
     if done != total_size:
-        print('Donwload unsuccessful : incomplete')
+        print('Download unsuccessful : incomplete')
         return False
 
     return True
