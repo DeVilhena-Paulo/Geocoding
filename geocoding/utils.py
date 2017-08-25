@@ -28,16 +28,15 @@ def pre_order(size):
     """List in pre order of integers ranging from 0 to size in a balanced
     binary tree.
     """
-    interval_list = [(0, size)] * size
-
-    head = 0
+    interval_list = [None] * size
+    interval_list[0] = (0, size)
     tail = 1
 
-    while tail < size:
+    for head in range(size):
         start, end = interval_list[head]
         mid = (start + end) // 2
 
-        if start < mid:
+        if mid > start:
             interval_list[tail] = (start, mid)
             tail += 1
 
@@ -45,9 +44,9 @@ def pre_order(size):
             interval_list[tail] = (mid + 1, end)
             tail += 1
 
-        head += 1
+        interval_list[head] = mid
 
-    return [(i + j) // 2 for i, j in interval_list]
+    return interval_list
 
 
 def search(element, indices, values, sorted=True):
