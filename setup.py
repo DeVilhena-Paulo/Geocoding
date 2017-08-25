@@ -5,7 +5,7 @@ with open('README.rst') as reader:
 
 setup(
     name='Geocoding',
-    version='1.4.0',
+    version='1.4.1',
     description='geocoding is an address search engine for France',
     long_description=readme,
     url='https://github.com/DeVilhena-Paulo/Geocoding',

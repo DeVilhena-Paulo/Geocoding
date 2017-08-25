@@ -26,12 +26,23 @@ def process_files():
 
     ban_files = {}
 
+    # Check if the folder with the data to process exists
+    if not os.path.exists(raw_data):
+        print('Execute : geocoding download')
+        return False
+
+    # Open each csv file
     for (dirname, dirs, files) in os.walk(raw_data):
         for filename in files:
             if filename.endswith('.csv'):
                 file_path = os.path.join(dirname, filename)
                 dpt_name = filename.split('_')[-1].split('.')[0]
                 ban_files[dpt_name] = open(file_path, 'r', encoding='UTF-8')
+
+    # Check if the folder was not empty
+    if not ban_files:
+        print('Execute : geocoding decompress')
+        return False
 
     departements = list(ban_files.keys())
     departements.sort()
@@ -40,8 +51,6 @@ def process_files():
         ban_processing.update(departement, ban_files[departement],
                               processed_files)
         completion_bar('Processing BAN', (i + 1) / len(departements))
-
-    print('')
 
     return True
 
@@ -55,22 +64,28 @@ def create_database():
 
     add_index_tables()
 
-    count, n_total = 0, len(processed_files)
+    count = 0
     for table, processed_file in processed_files.items():
         create_dat_file(list(processed_file), paths[table], dtypes[table])
 
         count += 1
-        completion_bar('Creating database', count / n_total)
+        completion_bar('Storing data', count / len(processed_files))
 
     return True
 
 
 def add_index_tables():
     index_tables = ['postal', 'commune', 'voie']
-    for table in index_tables:
+
+    # Index tables creation
+    for i, table in enumerate(index_tables):
+        sort_method = (lambda i: processed_files[table][i])
+
+        # Sort table and add it to the module level dict processed_files
         processed_files[table + '_index'] = \
-            sorted(range(len(processed_files[table])),
-                   key=(lambda i: processed_files[table][i]))
+            sorted(range(len(processed_files[table])), key=sort_method)
+
+        completion_bar('Indexing tables', (i + 1) / len(index_tables))
 
 
 def create_dat_file(lst, out_filename, dtype):
@@ -87,8 +102,3 @@ def create_dat_file(lst, out_filename, dtype):
         dat_file = np.memmap(out_file, dtype=dtype, shape=(len(lst),))
         dat_file[:] = lst[:]
         dat_file.flush()
-
-
-if __name__ == '__main__':
-    process_files()
-    create_database()

@@ -18,9 +18,13 @@ ban_zip = os.path.join(raw_data, 'ban.zip')
 def completion_bar(msg, fraction):
     percent = int(100 * fraction)
     size = int(50 * fraction)
-    sys.stdout.write("\r%-15s : %3d%%[%s%s]" %
+    sys.stdout.write("\r%-16s: %3d%%[%s%s]" %
                      (msg, percent, '=' * size, ' ' * (50 - size)))
     sys.stdout.flush()
+
+    # New line if bar is complete
+    if fraction == 1.:
+        print('')
 
 
 def get_ban_file():
@@ -46,8 +50,6 @@ def get_ban_file():
             done += len(block)
             completion_bar('Downloading BAN', done / total_size)
 
-        print('')
-
     if done != total_size:
         print('Download unsuccessful : incomplete')
         return False
@@ -72,8 +74,6 @@ def decompress():
             zf.extract(member, path=raw_data)
 
             count += 1
-            completion_bar('Decompressing', count / n_total)
-
-        print('')
+            completion_bar('Decompression', count / n_total)
 
     return True

@@ -20,31 +20,31 @@ def node_to_tuple(node):
 
 def create_kdtree():
     table = np.memmap(paths['localisation'], dtype=dtypes['localisation'])
-    size = len(table)
     indices = np.argsort(table, order='longitude').astype('int32')
 
+    # Limits of all the French region
     limits = [[degree_to_int(-62), degree_to_int(55)],
               [degree_to_int(-22), degree_to_int(52)]]
 
-    tree = Tree(2, size, limits)
+    tree = Tree(2, len(table), limits)
 
-    count, n_total = 0, size
-    for i in pre_order(size):
+    # Load tree with all the addresses on France
+    for count, i in enumerate(pre_order(len(table))):
         index = indices[i]
-        loc = table[index]
-        tree.insert((loc['longitude'], loc['latitude']), index)
+        tree.insert((table[index]['longitude'], table[index]['latitude']),
+                    data=index)
 
-        count += 1
-        if count % 30000 == 0 or count == n_total:
-            completion_bar('Loading kd-tree', (count / n_total))
-
-    print('\nStoring ...')
+        if count % 300000 == 0 or count == len(table) - 1:
+            completion_bar('Loading kd-tree', ((count + 1) / len(table)))
 
     tuple_list = [node_to_tuple(node) for node in tree]
 
     del tree
     gc.collect()
 
+    print('Storing ...')
     create_dat_file(tuple_list, paths['kdtree'], dtypes['kdtree'])
+
+    print('Done')
 
     return True
