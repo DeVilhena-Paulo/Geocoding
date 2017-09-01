@@ -84,10 +84,13 @@ def get_output(status, quality):
 
     """
     output = {}
+    for table in output_specs:
+        output[table] = {field: None for field in output_specs[table]}
+    output['longitude'] = None
+    output['latitude'] = None
+    output['quality'] = quality
+
     if status is None:
-        for table in output_specs:
-            output[table] = {field: None for field in output_specs[table]}
-        output['quality'] = quality
         return output
 
     # Get the index of the other tables
@@ -95,10 +98,10 @@ def get_output(status, quality):
     table, element_id = status
 
     # Get the coordinates of the address in the right format
-    if table != 'postal':
-        record = query.data[table][element_id]
-        output['longitude'] = int_to_degree(record['longitude'])
-        output['latitude'] = int_to_degree(record['latitude'])
+    if quality < 5:
+        element = query.data[table][element_id]
+        output['longitude'] = int_to_degree(element['longitude'])
+        output['latitude'] = int_to_degree(element['latitude'])
 
     # Get the required information
     for table in output_specs:
@@ -107,8 +110,6 @@ def get_output(status, quality):
             fields = output_specs[table]
             info = {field: record[field].item() for field in fields}
             output[table] = info
-        else:
-            output[table] = {field: None for field in output_specs[table]}
 
     output['quality'] = quality
     return output
