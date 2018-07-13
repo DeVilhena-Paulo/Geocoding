@@ -58,7 +58,7 @@ def get_ban_file():
         if md5(content_file_name_downloaded) == md5(content_file_name_actual):
             print('BAN database is already up to date. No need to download it again.')
             os.remove(content_file_name_downloaded)
-            return True
+            return False
         else:
             print('A new version of BAN base is available.')
     except Exception:
