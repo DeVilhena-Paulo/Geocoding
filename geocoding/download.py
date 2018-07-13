@@ -52,10 +52,13 @@ def get_ban_file():
             print('Download content file unsuccessful : bad response')
             return False
 
-    if md5(content_file_name_downloaded) == md5(content_file_name_actual):
-        print('BAN database is already up to date. No need to download it again.')
-        os.remove(content_file_name_downloaded)
-        return False
+    try:
+        if md5(content_file_name_downloaded) == md5(content_file_name_actual):
+            print('BAN database is already up to date. No need to download it again.')
+            os.remove(content_file_name_downloaded)
+            return False
+    except FileNotFoundError:
+        pass
 
     if os.path.exists(ban_zip):
         os.remove(ban_zip)
