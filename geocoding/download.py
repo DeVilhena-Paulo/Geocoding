@@ -47,23 +47,24 @@ def get_ban_file():
 
     with open(content_file_name_downloaded, 'wb') as handle:
         response = requests.get(url_content, stream=True)
-        for block in response.iter_content(4096):
-            handle.write(block)
 
         if not response.ok:
             print('Download content file unsuccessful : bad response')
             return False
+
+        for block in response.iter_content(4096):
+            handle.write(block)
 
     try:
         if md5(content_file_name_downloaded) == md5(content_file_name_actual):
             print('BAN database is already up to date. No need to download it again.')
             os.remove(content_file_name_downloaded)
             return False
-        else:
-            print('A new version of BAN base is available.')
     except Exception:
         os.remove(content_file_name_downloaded)
         pass
+
+    print('A new version of BAN base is available.')
 
     if os.path.exists(ban_zip):
         os.remove(ban_zip)
