@@ -7,11 +7,15 @@ import os
 import sys
 import zipfile
 import requests
+import hashlib
 
 from .datapaths import here
 
-url = 'https://adresse.data.gouv.fr/data/BAN_licence_gratuite_repartage.zip'
 raw_data = os.path.join(here, 'raw')
+url_content = 'https://adresse.data.gouv.fr/data/contenu.txt'
+content_file_name_actual = os.path.join(raw_data, 'contenu.txt')
+content_file_name_downloaded = os.path.join(here, 'new_content.txt')
+url_ban = 'https://adresse.data.gouv.fr/data/BAN_licence_gratuite_repartage.zip'
 ban_zip = os.path.join(raw_data, 'ban.zip')
 
 
@@ -27,17 +31,40 @@ def completion_bar(msg, fraction):
         print('')
 
 
+def md5(fname):
+    hash_md5 = hashlib.md5()
+    with open(fname, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+
 def get_ban_file():
     """Download the BAN files.
     """
     if not os.path.exists(raw_data):
         os.mkdir(raw_data)
 
+    with open(content_file_name_downloaded, 'wb') as handle:
+        response = requests.get(url_content, stream=True)
+
+        if not response.ok:
+            print('Download content file unsuccessful : bad response')
+            return False
+
+    try:
+        if md5(content_file_name_downloaded) == md5(content_file_name_actual):
+            print('BAN database is already up to date. No need to download it again.')
+            os.remove(content_file_name_downloaded)
+            return False
+    except FileNotFoundError:
+        pass
+
     if os.path.exists(ban_zip):
         os.remove(ban_zip)
 
     with open(ban_zip, 'wb') as handle:
-        response = requests.get(url, stream=True)
+        response = requests.get(url_ban, stream=True)
 
         if not response.ok:
             print('Download unsuccessful : bad response')

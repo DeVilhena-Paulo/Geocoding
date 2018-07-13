@@ -12,3 +12,4 @@ data/
 tests
 geocoding/database
 __pycache__/
+.idea/
