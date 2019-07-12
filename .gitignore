@@ -13,3 +13,5 @@ tests
 geocoding/database
 __pycache__/
 .idea/
+raw
+local_content.txt
