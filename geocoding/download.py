@@ -15,8 +15,9 @@ raw_data_folder_path = os.path.join(here, 'raw')
 ban_url = 'https://adresse.data.gouv.fr/data/ban/export-api-gestion/latest/ban/{}'
 ban_dpt_gz_file_name = 'ban-{}.csv.gz'
 ban_dpt_file_name = 'ban-{}.csv'
-server_content_file_name = 'server_content.txt'
-local_content_file_name = 'local_content.txt'
+content_folder_path = os.path.join(here, 'content')
+server_content_file_name = os.path.join(content_folder_path, 'server_content_v2.txt')
+local_content_file_name = os.path.join(content_folder_path, 'local_content_v2.txt')
 dpt_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
             "11", "12", "13", "14", "15", "16", "17", "18", "19",
             "21", "22", "23", "24", "25", "26", "27", "28", "29", "2A", "2B",
@@ -106,6 +107,8 @@ def download_ban_dpt_file(ban_dpt_file_name):
 
 
 def get_ban_file():
+    if not os.path.exists(content_folder_path):
+        os.mkdir(content_folder_path)
 
     if not need_to_download():
         return False
