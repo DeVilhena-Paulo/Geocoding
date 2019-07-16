@@ -7,17 +7,15 @@ from . import normalize as norm
 
 
 line_specs = {
-    "nom_voie": 1,
-    "numero": 3,
-    "repetition": 4,
-    "code_insee": 5,
-    "code_postal": 6,
-    "nom_ld": 8,
-    "nom_afnor": 9,
-    "acheminement": 10,
-    "longitude": 13,
-    "latitude": 14,
-    "nom_commune": 15
+    "nom_voie": 7,
+    "numero": 5,
+    "repetition": 6,
+    "code_insee": 10,
+    "code_postal": 8,
+    "longitude": 14,
+    "latitude": 15,
+    "nom_commune": 9,
+    "nom_complementaire": 11
 }
 
 types = {
@@ -27,11 +25,11 @@ types = {
     "latitude": float
 }
 
-voie_fields = ['nom_afnor', 'nom_voie', 'nom_ld']
+voie_fields = ['nom_voie']
 
-commune_fields = ['acheminement', 'nom_commune']
+commune_fields = ['nom_complementaire', 'nom_commune']
 
-fields_length = 16
+fields_length = 19
 
 
 def test(fields):
@@ -67,8 +65,7 @@ def get_voie(fields):
 
 def get_commune(fields):
     for field_name in commune_fields:
-        commune_nom, commune_normalise = get_field(field_name, fields,
-                                                   norm.uniform_commune)
+        commune_nom, commune_normalise = get_field(field_name, fields, norm.uniform_commune)
         if commune_nom is not None:
             return commune_nom, commune_normalise
     return None, None
@@ -106,7 +103,6 @@ def update(dpt_nom, csv_file, processed_files):
         attributes = get_attributes(line.strip().split(';'))
         if attributes is None:
             continue
-
         postal_key = attributes[:1]
         commune_key = attributes[1: 4]
         voie_key = attributes[4: 6]

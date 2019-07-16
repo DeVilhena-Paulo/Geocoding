@@ -36,7 +36,7 @@ def process_files():
         for filename in files:
             if filename.endswith('.csv'):
                 file_path = os.path.join(dirname, filename)
-                dpt_name = filename.split('_')[-1].split('.')[0]
+                dpt_name = filename.split('-')[-1].split('.')[0]
                 ban_files[dpt_name] = open(file_path, 'r', encoding='UTF-8')
 
     # Check if the folder was not empty
