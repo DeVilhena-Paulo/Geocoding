@@ -119,8 +119,8 @@ def get_ban_file():
 
     if os.path.exists(raw_data_folder_path):
         shutil.rmtree(raw_data_folder_path)
-    else:
-        os.mkdir(raw_data_folder_path)
+    
+    os.mkdir(raw_data_folder_path)
 
     for dpt in dpt_list:
         if not download_ban_dpt_file(ban_dpt_gz_file_name.format(dpt)):
