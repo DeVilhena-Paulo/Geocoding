@@ -13,7 +13,7 @@ from collections import deque
 
 from .datatypes import dtypes
 from .datapaths import paths, database
-from .download import completion_bar, raw_data
+from .download import completion_bar, raw_data_folder_path
 from . import ban_processing
 
 file_names = ['departement', 'postal', 'commune', 'voie', 'localisation']
@@ -27,16 +27,16 @@ def process_files():
     ban_files = {}
 
     # Check if the folder with the data to process exists
-    if not os.path.exists(raw_data):
+    if not os.path.exists(raw_data_folder_path):
         print('Execute : geocoding download')
         return False
 
     # Open each csv file
-    for (dirname, dirs, files) in os.walk(raw_data):
+    for (dirname, dirs, files) in os.walk(raw_data_folder_path):
         for filename in files:
             if filename.endswith('.csv'):
                 file_path = os.path.join(dirname, filename)
-                dpt_name = filename.split('_')[-1].split('.')[0]
+                dpt_name = filename.split('-')[-1].split('.')[0]
                 ban_files[dpt_name] = open(file_path, 'r', encoding='UTF-8')
 
     # Check if the folder was not empty
@@ -48,8 +48,7 @@ def process_files():
     departements.sort()
 
     for i, departement in enumerate(departements):
-        ban_processing.update(departement, ban_files[departement],
-                              processed_files)
+        ban_processing.update(departement, ban_files[departement], processed_files)
         completion_bar('Processing BAN', (i + 1) / len(departements))
 
     return True
