@@ -37,7 +37,7 @@ def process_files():
             if filename.endswith('.csv'):
                 file_path = os.path.join(dirname, filename)
                 dpt_name = filename.split('-')[-1].split('.')[0]
-                ban_files[dpt_name] = open(file_path, 'r', encoding='UTF-8')
+                ban_files[dpt_name] = file_path
 
     # Check if the folder was not empty
     if not ban_files:
@@ -95,7 +95,6 @@ def create_dat_file(lst, out_filename, dtype):
         out_filename: The name of the binary file. It must be in the same
             directory.
         dtype: The type of the numpy array.
-
     """
     with open(out_filename, 'wb+') as out_file:
         dat_file = np.memmap(out_file, dtype=dtype, shape=(len(lst),))
