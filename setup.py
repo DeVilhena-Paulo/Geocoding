@@ -25,7 +25,7 @@ setup(
     ],
     keywords='Geocoder France',
     packages=['geocoding'],
-    install_requires=['numpy', 'Unidecode', 'KdQuery', 'sortedcontainers'],
+    install_requires=['numpy', 'Unidecode', 'KdQuery', 'sortedcontainers', 'requests'],
     entry_points={
         'console_scripts': [
             'geocoding = geocoding.__main__:main'
