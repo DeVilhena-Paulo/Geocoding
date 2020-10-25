@@ -5,7 +5,7 @@ with open('README.rst') as reader:
 
 setup(
     name='Geocoding',
-    version='1.4.2',
+    version='1.4.3',
     description='geocoding is an address search engine for France',
     long_description=readme,
     url='https://github.com/DeVilhena-Paulo/Geocoding',
@@ -22,6 +22,7 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     keywords='Geocoder France',
     packages=['geocoding'],
