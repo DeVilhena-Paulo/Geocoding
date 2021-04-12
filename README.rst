@@ -29,6 +29,7 @@ Alternatively, you can do it step by step with the following commands::
   geocoding download
   geocoding decompress
   geocoding index
+  geocoding remove_non_necessary_files
 
 To unlock the reverse search, execute the following command::
 

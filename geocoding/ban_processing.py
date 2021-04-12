@@ -12,8 +12,8 @@ line_specs = {
     "repetition": 6,
     "code_insee": 10,
     "code_postal": 8,
-    "longitude": 14,
-    "latitude": 15,
+    "longitude": 15,
+    "latitude": 16,
     "nom_commune": 9,
     "nom_complementaire": 11
 }
@@ -29,13 +29,8 @@ voie_fields = ['nom_voie']
 
 commune_fields = ['nom_complementaire', 'nom_commune']
 
-fields_length = 19
-
 
 def test(fields):
-    if len(fields) != fields_length:
-        return False
-
     for field in types:
         try:
             types[field](fields[line_specs[field]])
@@ -85,7 +80,6 @@ def get_attributes(fields):
 
     code_insee = fields[line_specs['code_insee']]
     code_postal = int(fields[line_specs['code_postal']])
-
     numero = int(fields[line_specs['numero']])
     repetition = fields[line_specs['repetition']].replace('"', '')
     lon = degree_to_int(fields[line_specs['longitude']])
