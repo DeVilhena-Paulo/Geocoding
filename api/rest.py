@@ -5,6 +5,7 @@ from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import request
+from flask import send_file
 from flask import url_for
 from datetime import datetime
 from api.Geocoder import Geocoder
@@ -18,7 +19,7 @@ api_rest = Blueprint(
 
 @api_rest.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", version=VERSION)
 
 
 @api_rest.route("/use")

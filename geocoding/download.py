@@ -18,9 +18,9 @@ ban_dpt_file_name = 'ban-{}.csv'
 content_folder_path = os.path.join(here, 'content')
 server_content_file_name = os.path.join(content_folder_path, 'server_content_v2.txt')
 local_content_file_name = os.path.join(content_folder_path, 'local_content_v2.txt')
-dpt_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
-            "11", "12", "13", "14", "15", "16", "17", "18", "19",
-            "21", "22", "23", "24", "25", "26", "27", "28", "29", "2A", "2B",
+dpt_list = ["01", "02", "03", "04", "05", "06", "07", "08", "09",
+            "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+            "2A", "2B", "21", "22", "23", "24", "25", "26", "27", "28", "29",
             "30", "31", "32", "33", "34", "35", "36", "37", "38", "39",
             "40", "41", "42", "43", "44", "45", "46", "47", "48", "49",
             "50", "51", "52", "53", "54", "55", "56", "57", "58", "59",
@@ -95,9 +95,7 @@ def download_ban_dpt_file(ban_dpt_file_name):
         done, total_size = 0, int(response.headers.get('content-length'))
         for block in response.iter_content(4096):
             ban_dpt_file.write(block)
-
             done += len(block)
-            completion_bar('Downloading {}'.format(ban_dpt_file_name), done / total_size)
 
     if done != total_size:
         print('Download {} unsuccessful: incomplete'.format(ban_dpt_file_name))
@@ -122,9 +120,13 @@ def get_ban_file():
 
     os.mkdir(raw_data_folder_path)
 
+    count = 0
     for dpt in dpt_list:
-        if not download_ban_dpt_file(ban_dpt_gz_file_name.format(dpt)):
-            raise Exception('Impossible to download {}'.format(ban_dpt_gz_file_name.format(dpt)))
+        downloading_ban_dpt_gz_file_name = ban_dpt_gz_file_name.format(dpt)
+        if not download_ban_dpt_file(downloading_ban_dpt_gz_file_name):
+            raise Exception('Impossible to download {}'.format(downloading_ban_dpt_gz_file_name))
+        count += 1
+        completion_bar('Downloading BAN files', count / len(dpt_list))
 
     return True
 

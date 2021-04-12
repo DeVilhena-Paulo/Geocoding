@@ -1,0 +1,19 @@
+.space {
+    height: 20px;
+}
+
+#loading, #result_error, #result_info {
+    display: none;
+}
+
+#geocode {
+    width: 100%;
+}
+
+.form-group {
+    margin: 15px 0px;
+}
+
+div[id^="map"] {
+    height: 90vh;
+}

@@ -21,6 +21,11 @@ Build the API server locally
 
   docker build --build-arg app_port=8088 --progress=plain -t geocoding-api .
 
+Docker requirements for building
+
+* Memory 12Gb
+* Disk image size 50Gb
+
 Use it
 
   docker run -p 8088:8088 geocoding-api
