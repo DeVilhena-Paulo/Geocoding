@@ -12,6 +12,43 @@ Prerequisites
 
 * Python version 3 installed locally
 * Pip installed locally
+* Docker (for geocoding API use)
+
+Using API with Docker
+---------------------
+
+Build the API server locally
+
+  docker build --build-arg app_port=8088 --progress=plain -t geocoding-api .
+
+Use it
+
+  docker run -p 8088:8088 geocoding-api
+
+The API is available through:
+
+* In your browser:
+
+  * http://localhost:8088
+  * http://localhost:8088/use
+  * http://localhost:8088/geocode/<address>/<postal_code>/<city>
+
+* With Curl:
+
+  curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"address": [], "postal_code": [], "city": []}' \
+  http://localhost:8088/geocode_file
+
+Exemples:
+
+  http://localhost:8088/geocode/12, Bd des Maréchaux/91120/Palaiseau
+
+  curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"address": "12, Bd des Maréchaux", "postal_code": "91120", "city": "Palaiseau"}' \
+  http://localhost:8088/geocode_file
+
 
 For using purposes
 ------------------

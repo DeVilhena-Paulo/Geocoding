@@ -1,5 +1,7 @@
-requests
-unidecode
+flask
 kdquery
 numpy
+pandas
+requests
 sortedcontainers
+unidecode
