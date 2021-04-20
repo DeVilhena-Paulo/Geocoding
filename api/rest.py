@@ -1,7 +1,3 @@
-import json
-
-import pandas as pd
-
 from flask import Blueprint
 from flask import jsonify
 from flask import redirect
@@ -11,6 +7,7 @@ from flask import url_for
 from datetime import datetime
 from api.Geocoder import Geocoder
 from api.conf import *
+from Geocoding_utils import *
 
 api_rest = Blueprint(
     "rest",

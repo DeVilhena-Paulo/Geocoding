@@ -1,4 +1,5 @@
 flask
+git+https://github.com/chrlryo/Geocoding-utils@master#egg=Geocoding-utils
 kdquery
 numpy
 pandas

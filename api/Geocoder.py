@@ -3,7 +3,7 @@ import geocoding
 import numpy as np
 
 from datetime import datetime
-from api.conf import *
+from Geocoding_utils import *
 
 
 class Geocoder:
