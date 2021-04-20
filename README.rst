@@ -42,7 +42,7 @@ The API is available through:
 
   curl --header "Content-Type: application/json" \
   --request POST \
-  --data '{"address": [], "postal_code": [], "city": []}' \
+  --data '[{"address": "...", "postal_code": "...", "city": "..."}, {"address": "...", "postal_code": "...", "city": "..."}]' \
   http://localhost:8088/geocode_file
 
 Exemples:
@@ -51,7 +51,7 @@ Exemples:
 
   curl --header "Content-Type: application/json" \
   --request POST \
-  --data '{"address": "12, Bd des Maréchaux", "postal_code": "91120", "city": "Palaiseau"}' \
+  --data '[{"address": "12, Bd des Maréchaux", "postal_code": "91120", "city": "Palaiseau"}]' \
   http://localhost:8088/geocode_file
 
 

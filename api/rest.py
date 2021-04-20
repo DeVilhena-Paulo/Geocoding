@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 
 from flask import Blueprint
@@ -5,7 +7,6 @@ from flask import jsonify
 from flask import redirect
 from flask import render_template
 from flask import request
-from flask import send_file
 from flask import url_for
 from datetime import datetime
 from api.Geocoder import Geocoder
@@ -40,7 +41,7 @@ def get_jsoned_geocoded_data(geocoder):
         'quality': QUALITY,
     }
     if geocoder.is_geocoded():
-        json['data'] = geocoder.get_geocoded_data().to_dict('list')
+        json['data'] = geocoder.get_geocoded_data().to_dict('records')
     elif geocoder.has_errors():
         json['errors'] = geocoder.get_errors()
     else:
@@ -50,14 +51,19 @@ def get_jsoned_geocoded_data(geocoder):
 
 @api_rest.route("/geocode/<address>/<postal_code>/<city>", methods=["GET"])
 def geocode_one(address, postal_code, city):
-    geocoder = Geocoder(pd.DataFrame(data={ADDRESS: [address], POSTAL_CODE: [postal_code], CITY: [city]}))
+    geocoder = Geocoder(pd.DataFrame(data={ADDRESS: address, POSTAL_CODE: postal_code, CITY: city}))
     geocoder.geocode()
     return jsonify(get_jsoned_geocoded_data(geocoder))
 
 
 @api_rest.route("/geocode_file", methods=["POST"])
 def geocode_file():
-    data_to_geocode = pd.json_normalize(request.get_json(force=True))
+    json_as_str = request.get_json(force=True)
+    try:
+        data = json.loads(json_as_str)
+    except:
+        data = json.loads(json.dumps(json_as_str))
+    data_to_geocode = pd.json_normalize(data)
     geocoder = Geocoder(data_to_geocode)
     geocoder.geocode()
     return jsonify(get_jsoned_geocoded_data(geocoder))

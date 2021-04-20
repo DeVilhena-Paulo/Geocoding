@@ -38,11 +38,11 @@ function geocode() {
     var postal_code = $("#postal_code").val();
     var city = $("#city").val();
 
-    var input_request = {
+    var input_request = [{
         "address": address,
         "postal_code": postal_code,
         "city": city
-    };
+    }];
 
     $.ajax({url : rest_url,
            type : "POST",
@@ -52,10 +52,10 @@ function geocode() {
     .done(function(response) {
         try {
             var geocoded = response;
-
-            var lat = geocoded.data.lat[0];
-            var lon = geocoded.data.lon[0];
-            var quality = geocoded.data.quality[0];
+            var geocoded_data = geocoded.data[0];
+            var lat = geocoded_data.lat;
+            var lon = geocoded_data.lon;
+            var quality = geocoded_data.quality;
             var quality_label = geocoded.quality[quality];
 
             display_result_ok(quality + ' : ' + quality_label, lat, lon, quality);
