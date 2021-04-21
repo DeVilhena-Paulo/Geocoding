@@ -1,5 +1,4 @@
 from setuptools import setup
-import pandas as pd
 
 with open('README.rst') as reader:
     readme = reader.read()
@@ -7,7 +6,16 @@ with open('README.rst') as reader:
 with open('version.txt') as reader:
     version = reader.read()
 
-requirements = list(pd.read_csv('requirements.txt', header=None)[0])
+requirements = [
+    'flask',
+    'Geocoding-utils',
+    'kdquery',
+    'numpy',
+    'pandas',
+    'requests',
+    'sortedcontainers',
+    'unidecode',
+]
 
 setup(
     name='Geocoding',
