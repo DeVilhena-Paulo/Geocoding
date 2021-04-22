@@ -119,7 +119,7 @@ def get_ban_file():
 
     if os.path.exists(raw_data_folder_path):
         shutil.rmtree(raw_data_folder_path)
-    
+
     os.mkdir(raw_data_folder_path)
 
     for dpt in dpt_list:
@@ -134,7 +134,7 @@ def decompress():
         # Certifies the existence of the subdirectory.
         dpt_gz_file_path = os.path.join(raw_data_folder_path, ban_dpt_gz_file_name.format(dpt))
         if not os.path.isfile(dpt_gz_file_path):
-            print('Decompression unsuccessful : inexistent file {}'.format(dpt_gz_file_path))
+            print('Decompression unsuccessful: nonexistent file {}'.format(dpt_gz_file_path))
             return False
 
         # Decompress each file within gzip
@@ -144,4 +144,20 @@ def decompress():
             with open(dpt_file_path, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
 
+        remove_file(dpt_gz_file_path)
+
+    return True
+
+
+def remove_file(file_path):
+    print('Deleting file {}'.format(file_path))
+    try:
+        os.remove(file_path)
+    except Exception:
+        pass
+
+
+def remove_downloaded_raw_ban_files():
+    for dpt in dpt_list:
+        remove_file(os.path.join(raw_data_folder_path, ban_dpt_file_name.format(dpt)))
     return True

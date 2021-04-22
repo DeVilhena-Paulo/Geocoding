@@ -12,8 +12,8 @@ line_specs = {
     "repetition": 6,
     "code_insee": 10,
     "code_postal": 8,
-    "longitude": 14,
-    "latitude": 15,
+    "longitude": 15,
+    "latitude": 16,
     "nom_commune": 9,
     "nom_complementaire": 11
 }
@@ -29,13 +29,8 @@ voie_fields = ['nom_voie']
 
 commune_fields = ['nom_complementaire', 'nom_commune']
 
-fields_length = 19
-
 
 def test(fields):
-    if len(fields) != fields_length:
-        return False
-
     for field in types:
         try:
             types[field](fields[line_specs[field]])
@@ -85,7 +80,6 @@ def get_attributes(fields):
 
     code_insee = fields[line_specs['code_insee']]
     code_postal = int(fields[line_specs['code_postal']])
-
     numero = int(fields[line_specs['numero']])
     repetition = fields[line_specs['repetition']].replace('"', '')
     lon = degree_to_int(fields[line_specs['longitude']])
@@ -95,31 +89,32 @@ def get_attributes(fields):
             voie_normalise, voie_nom, numero, repetition, lon, lat)
 
 
-def update(dpt_nom, csv_file, processed_files):
+def update(dpt_nom, csv_file_path, processed_files):
     postal_dict = SortedDict()
 
-    next(csv_file)
-    for line in csv_file:
-        attributes = get_attributes(line.strip().split(';'))
-        if attributes is None:
-            continue
-        postal_key = attributes[:1]
-        commune_key = attributes[1: 4]
-        voie_key = attributes[4: 6]
-        localisation = attributes[6:]
+    with open(csv_file_path, 'r', encoding='UTF-8') as f:
+        next(f)
+        for line in f:
+            attributes = get_attributes(line.strip().split(';'))
+            if attributes is None:
+                continue
+            postal_key = attributes[:1]
+            commune_key = attributes[1: 4]
+            voie_key = attributes[4: 6]
+            localisation = attributes[6:]
 
-        if postal_key not in postal_dict:
-            postal_dict[postal_key] = SortedDict()
+            if postal_key not in postal_dict:
+                postal_dict[postal_key] = SortedDict()
 
-        commune_dict = postal_dict[postal_key]
-        if commune_key not in commune_dict:
-            commune_dict[commune_key] = SortedDict()
+            commune_dict = postal_dict[postal_key]
+            if commune_key not in commune_dict:
+                commune_dict[commune_key] = SortedDict()
 
-        voie_dict = commune_dict[commune_key]
-        if voie_key not in voie_dict:
-            voie_dict[voie_key] = SortedSet()
+            voie_dict = commune_dict[commune_key]
+            if voie_key not in voie_dict:
+                voie_dict[voie_key] = SortedSet()
 
-        voie_dict[voie_key].add(localisation)
+            voie_dict[voie_key].add(localisation)
 
     update_departement(dpt_nom, processed_files, postal_dict)
 

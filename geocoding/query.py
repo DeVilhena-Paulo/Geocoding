@@ -169,12 +169,19 @@ def select_commune(postal_id, commune):
             None otherwise.
 
     """
-    if postal_id is None or commune is None:
+    if postal_id is None:
+        return None
+
+    ref_element = data['postal'][postal_id]
+    start, end = ref_element['start'], ref_element['end']
+
+    if end-start < 2:
+        return start
+
+    if commune is None:
         return None
 
     # Binary search
-    ref_element = data['postal'][postal_id]
-    start, end = ref_element['start'], ref_element['end']
     commune_id, found = select('commune', 'normalise', start, end, commune)
 
     # Heuristics search with string similarity
