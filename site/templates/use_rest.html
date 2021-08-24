@@ -23,6 +23,28 @@
             <li>http://localhost:8088/geocode/12, Bd des Maréchaux/91120/Palaiseau</li>
         </ul>
     </li>
+</ul>
+
+<ul>
+    <li>With Curl:
+        <ul>
+            <li>curl --header "Content-Type: application/json" \<br/>
+                --request POST \<br/>
+                --data '[{"address": "", "postal_code": "", "city": ""}]' \<br/>
+                http://localhost:8088/geocode_file</li>
+        </ul>
+    </li>
+    <li>Exemple:
+        <ul>
+            <li>curl --header "Content-Type: application/json" \<br/>
+                --request POST \<br/>
+                --data '[{"address": "12, Bd des Maréchaux", "postal_code": "91120", "city": "Palaiseau"}]' \<br/>
+                http://localhost:8088/geocode_file</li>
+        </ul>
+    </li>
+</ul>
+
+<ul>
     <li>Response:
         <ul>
             <li>
@@ -31,12 +53,7 @@
     "uuid": "ea65498a-9b76-11eb-88e2-0242ac110002",
     "api_version": "2.0.0",
     "geocoded_time": "2021-04-12 10:07:40.592207",
-    "data": {"cp": ["91120"],
-             "lat": [48.7099138],
-             "lon": [2.2099342],
-             "quality": [1],
-             "ville": ["Palaiseau"],
-             "voie": ["12, Bd des Maréchaux"]},
+    "data": [{"cp": "91120", "lat": 48.7099138, "lon": 2.2099342, "quality": 1, "ville": "Palaiseau", "voie": "12, Bd des Maréchaux"}],
     "quality": {"1": "Successful",
                 "2": "Precise number was not found",
                 "3": "Precise number was not found and there was no number in the input",
@@ -46,25 +63,6 @@
 }
                 </pre>
             </li>
-        </ul>
-    </li>
-</ul>
-
-<ul>
-    <li>With Curl:
-        <ul>
-            <li>curl --header "Content-Type: application/json" \<br/>
-                --request POST \<br/>
-                --data '{"address": [], "postal_code": [], "city": []}' \<br/>
-                http://localhost:8088/geocode_file</li>
-        </ul>
-    </li>
-    <li>Exemple:
-        <ul>
-            <li>curl --header "Content-Type: application/json" \<br/>
-                --request POST \<br/>
-                --data '{"address": "12, Bd des Maréchaux", "postal_code": "91120", "city": "Palaiseau"}' \<br/>
-                http://localhost:8088/geocode_file</li>
         </ul>
     </li>
 </ul>
