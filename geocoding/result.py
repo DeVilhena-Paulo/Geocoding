@@ -103,6 +103,14 @@ def get_output(status, quality):
         output['longitude'] = int_to_degree(element['longitude'])
         output['latitude'] = int_to_degree(element['latitude'])
 
+    if quality == 5:
+        element = query.data[table][element_id]
+        start, end = element['start'], element['end']
+        lons = [query.data['commune'][i]["longitude"] for i in range(start, end)]
+        lats = [query.data['commune'][i]["latitude"] for i in range(start, end)]
+        output['longitude'] = int_to_degree(int(sum(lons)/len(lons)))
+        output['latitude'] = int_to_degree(int(sum(lats)/len(lats)))
+
     # Get the required information
     for table in output_specs:
         if table in table_ids:

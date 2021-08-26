@@ -3,9 +3,23 @@ from setuptools import setup
 with open('README.rst') as reader:
     readme = reader.read()
 
+with open('version.txt') as reader:
+    version = reader.read()
+
+requirements = [
+    'flask',
+    'Geocoding-utils',
+    'kdquery',
+    'numpy',
+    'pandas',
+    'requests',
+    'sortedcontainers',
+    'unidecode',
+]
+
 setup(
     name='Geocoding',
-    version='1.4.3',
+    version=version,
     description='geocoding is an address search engine for France',
     long_description=readme,
     url='https://github.com/DeVilhena-Paulo/Geocoding',
@@ -23,10 +37,11 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
-    keywords='Geocoder France',
+    keywords='Geocoder.py France',
     packages=['geocoding'],
-    install_requires=['numpy', 'Unidecode', 'KdQuery', 'sortedcontainers', 'requests'],
+    install_requires=requirements,
     entry_points={
         'console_scripts': [
             'geocoding = geocoding.__main__:main'
